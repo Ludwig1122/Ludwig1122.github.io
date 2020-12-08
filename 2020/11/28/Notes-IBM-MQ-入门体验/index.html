@@ -12,23 +12,25 @@
 
 <link rel="stylesheet" href="/css/main.css">
 
-
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=UnifrakturCook:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
 <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="这两天的工作涉及到和总部系统及外部系统的客户体验联调测试，通讯部分使用的是传统的socket加IBM MQ的组合；socket用于和外单位进行通讯，而MQ则用作我们内部系统间的通讯。传统的socket很熟悉了，那MQ呢？由于平时的工作很少涉及到亲自从零搭配MQ以及修改相关配置，所以对这个东西根本没有任何经验。介于项目紧急，所以必须尽快掌握该业务中间件的基础操作。 何为IBM MQ?“MQ”是 Me">
+  <meta name="description" content="这两天的工作涉及到和总部系统及外部系统的客户体验联调测试，通讯部分使用的是传统的socket加IBM MQ的组合；socket用于和外单位进行通讯，而MQ则用作我们内部系统间的通讯。传统的socket很熟悉了，那MQ呢？由于平时的工作很少涉及到亲自从零搭配MQ以及修改相关配置，所以对这个东西根本没有任何经验。介于项目紧急，所以必须尽快掌握该业务中间件的基础操作。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Notes\ IBM MQ 入门体验">
+<meta property="og:title" content="Notes\ IBM MQ 初体验">
 <meta property="og:url" content="http://example.com/2020/11/28/Notes-IBM-MQ-%E5%85%A5%E9%97%A8%E4%BD%93%E9%AA%8C/index.html">
 <meta property="og:site_name" content="Ludwig&#39;s Blog">
-<meta property="og:description" content="这两天的工作涉及到和总部系统及外部系统的客户体验联调测试，通讯部分使用的是传统的socket加IBM MQ的组合；socket用于和外单位进行通讯，而MQ则用作我们内部系统间的通讯。传统的socket很熟悉了，那MQ呢？由于平时的工作很少涉及到亲自从零搭配MQ以及修改相关配置，所以对这个东西根本没有任何经验。介于项目紧急，所以必须尽快掌握该业务中间件的基础操作。 何为IBM MQ?“MQ”是 Me">
+<meta property="og:description" content="这两天的工作涉及到和总部系统及外部系统的客户体验联调测试，通讯部分使用的是传统的socket加IBM MQ的组合；socket用于和外单位进行通讯，而MQ则用作我们内部系统间的通讯。传统的socket很熟悉了，那MQ呢？由于平时的工作很少涉及到亲自从零搭配MQ以及修改相关配置，所以对这个东西根本没有任何经验。介于项目紧急，所以必须尽快掌握该业务中间件的基础操作。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-11-28T15:39:54.000Z">
-<meta property="article:modified_time" content="2020-12-03T15:18:39.822Z">
+<meta property="article:modified_time" content="2020-12-06T14:01:19.850Z">
 <meta property="article:author" content="Ludwig von Weychthofen">
 <meta name="twitter:card" content="summary">
 
@@ -45,7 +47,7 @@
   };
 </script>
 
-  <title>Notes\ IBM MQ 入门体验 | Ludwig's Blog</title>
+  <title>Notes\ IBM MQ 初体验 | Ludwig's Blog</title>
   
 
 
@@ -117,9 +119,34 @@
     <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
 
   </li>
+        <li class="menu-item menu-item-technology">
+
+    <a href="/Technology/" rel="section"><i class="fa fa-hashtag fa-fw"></i>Technology</a>
+
+  </li>
+        <li class="menu-item menu-item-café-house">
+
+    <a href="/caf%C3%A9%20House/" rel="section"><i class="fa fa-coffee fa-fw"></i>Café House</a>
+
+  </li>
+        <li class="menu-item menu-item-模型屋">
+
+    <a href="/Modle%20House/" rel="section"><i class="fa fa-space-shuttle fa-fw"></i>模型屋</a>
+
+  </li>
         <li class="menu-item menu-item-archives">
 
     <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
 
   </li>
   </ul>
@@ -136,6 +163,7 @@
     <i class="fa fa-arrow-up"></i>
     <span>0%</span>
   </div>
+  <div class="reading-progress-bar"></div>
 
 
     <main class="main">
@@ -163,7 +191,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Notes\ IBM MQ 入门体验
+          Notes\ IBM MQ 初体验
         </h1>
 
         <div class="post-meta">
@@ -180,7 +208,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-12-03 23:18:39" itemprop="dateModified" datetime="2020-12-03T23:18:39+08:00">2020-12-03</time>
+                <time title="修改时间：2020-12-06 22:01:19" itemprop="dateModified" datetime="2020-12-06T22:01:19+08:00">2020-12-06</time>
               </span>
 
           <br>
@@ -189,7 +217,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>448</span>
+              <span>472</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -209,8 +237,9 @@
 
       
         <p>这两天的工作涉及到和总部系统及外部系统的客户体验联调测试，通讯部分使用的是传统的socket加IBM MQ的组合；socket用于和外单位进行通讯，而MQ则用作我们内部系统间的通讯。传统的socket很熟悉了，那MQ呢？由于平时的工作很少涉及到亲自从零搭配MQ以及修改相关配置，所以对这个东西根本没有任何经验。介于项目紧急，所以必须尽快掌握该业务中间件的基础操作。</p>
+<a id="more"></a>
 <h2 id="何为IBM-MQ"><a href="#何为IBM-MQ" class="headerlink" title="何为IBM MQ?"></a>何为IBM MQ?</h2><p>“MQ”是 Message Queue 即消息队列的缩写，这里特指IBM WebSphere中间件的一部分，提供备受认可的企业级消息传递功能，可稳定且安全地在应用之间进行消息传递。  队列，即基本数据结构中先入先出（FIFO）的队列（Queue）。MQ 是一款企业级消息传递解决方案，能够安全、可靠地连接多个平台的应用、系统、服务及文件。MQ 能够通过队列系统，在这些作业点之间传输数据，确保在网络或应用出现故障时，实现稳定交付。</p>
-<h2 id="实际配置环境"><a href="#实际配置环境" class="headerlink" title="实际配置环境"></a>实际配置环境</h2><p>出于保密原因，这里只提及基础操作系统版本即通用配置，涉及到具体队列名、管理器等信息不予提及。</p>
+<h2 id="MQ是怎么组成的"><a href="#MQ是怎么组成的" class="headerlink" title="MQ是怎么组成的"></a>MQ是怎么组成的</h2><p>出于保密原因，这里只提及基础操作系统版本即通用配置，涉及到具体队列名、管理器等信息不予提及。这里运行MQ的操作系统是IBM Aix 7.1。</p>
 
     </div>
 
@@ -229,7 +258,10 @@
     <a href="/2020/11/22/C%E8%AF%AD%E8%A8%80%E5%8F%82%E6%95%B0%E5%88%97%E8%A1%A8%E7%9A%84%E5%BA%94%E7%94%A8/" rel="prev" title="Notes\ C语言main函数参数列表的应用">
       <i class="fa fa-chevron-left"></i> Notes\ C语言main函数参数列表的应用
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2020/12/08/Notes-sha256/" rel="next" title="Notes\ SHA256 算法">
+      Notes\ SHA256 算法 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -288,7 +320,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%95%E4%B8%BAIBM-MQ"><span class="nav-number">1.</span> <span class="nav-text">何为IBM MQ?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E9%99%85%E9%85%8D%E7%BD%AE%E7%8E%AF%E5%A2%83"><span class="nav-number">2.</span> <span class="nav-text">实际配置环境</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%95%E4%B8%BAIBM-MQ"><span class="nav-number">1.</span> <span class="nav-text">何为IBM MQ?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MQ%E6%98%AF%E6%80%8E%E4%B9%88%E7%BB%84%E6%88%90%E7%9A%84"><span class="nav-number">2.</span> <span class="nav-text">MQ是怎么组成的</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -302,7 +334,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-count">4</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -339,14 +371,14 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">1k</span>
+    <span title="站点总字数">2k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1 分钟</span>
+    <span title="站点阅读时长">2 分钟</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
   </div>
 
         
@@ -372,7 +404,7 @@
 <script src="/js/motion.js"></script>
 
 
-<script src="/js/schemes/pisces.js"></script>
+<script src="/js/schemes/muse.js"></script>
 
 
 <script src="/js/next-boot.js"></script>
