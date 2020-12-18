@@ -1,19 +1,19 @@
 :root {
   --body-bg-color: #eee;
-  --content-bg-color: #fff;
-  --card-bg-color: #f5f5f5;
-  --text-color: #1bd0ef;
-  --blockquote-color: #666;
-  --link-color: #555;
-  --link-hover-color: #222;
-  --brand-color: #fff;
+  --content-bg-color: #1e1337;
+  --card-bg-color: #555;
+  --text-color: #13ffc1;
+  --blockquote-color: #bbb;
+  --link-color: #fbf50b;
+  --link-hover-color: #eee;
+  --brand-color: #000;
   --brand-hover-color: #fff;
   --table-row-odd-bg-color: #f9f9f9;
   --table-row-hover-bg-color: #f5f5f5;
   --menu-item-bg-color: #1bd0ef;
   --btn-default-bg: #fff;
-  --btn-default-color: #1bd0ef;
-  --btn-default-border-color: #1bd0ef;
+  --btn-default-color: #13ffc1;
+  --btn-default-border-color: #13ffc1;
   --btn-default-hover-bg: #222;
   --btn-default-hover-color: #fff;
   --btn-default-hover-border-color: #222;
@@ -23,20 +23,20 @@
     --body-bg-color: #fbf50b;
     --content-bg-color: #1e1337;
     --card-bg-color: #555;
-    --text-color: #1bd0ef;
+    --text-color: #13ffc1;
     --blockquote-color: #bbb;
     --link-color: #fbf50b;
     --link-hover-color: #eee;
-    --brand-color: #fff;
-    --brand-hover-color: #fff;
+    --brand-color: #000;
+    --brand-hover-color: #000;
     --table-row-odd-bg-color: #282828;
     --table-row-hover-bg-color: #363636;
     --menu-item-bg-color: #1bd0ef;
     --btn-default-bg: #222;
-    --btn-default-color: #1bd0ef;
+    --btn-default-color: #13ffc1;
     --btn-default-border-color: #555;
     --btn-default-hover-bg: #666;
-    --btn-default-hover-color: #1bd0ef;
+    --btn-default-hover-color: #13ffc1;
     --btn-default-hover-border-color: #666;
   }
   img {
@@ -195,8 +195,8 @@ template {
   display: none;
 }
 ::selection {
-  background: #262a30;
-  color: #00ff7d;
+  background: #1bd0ef;
+  color: #fbf50b;
 }
 html,
 body {
@@ -608,7 +608,7 @@ pre .javascript .function {
   margin-bottom: 10px;
 }
 .post-body .label {
-  color: #1bd0ef;
+  color: #13ffc1;
   display: inline;
   padding: 0 2px;
 }
@@ -1019,8 +1019,8 @@ pre .javascript .function {
   padding: 0 10px;
 }
 .headband {
-  background: #1e1337;
-  height: 3px;
+  background: #fbf50b;
+  height: 12px;
 }
 .site-meta {
   flex-grow: 1;
@@ -1226,7 +1226,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #ff286e;
+  background: #1f586c;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -1570,7 +1570,7 @@ pre .javascript .function {
   }
 }
 body {
-  background: url("/images/Running_the_show-en.jpg");
+  background: url("/images/34779.jpg");
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-position: 50% 50%;
@@ -1583,7 +1583,13 @@ body {
   background: rgba(255,255,255,0.9);
 }
 .popup {
-  opacity: 0.9;
+  opacity: 0.8;
+}
+.site-meta {
+  background: #fbf50b;
+}
+.sidebar {
+  background: #fbf50b;
 }
 .reading-progress-bar {
   background: #ffff00;

@@ -24,14 +24,15 @@
 
   <meta name="description" content="最近参与的项目涉及到对报文添加数字摘要，使用的算法是SHA256。关于SHA256算法，网上一搜一大把，虽说这样可以解决燃眉之急，但并不利于其他项目但共享，所以为了团队开发的方便，需要自行编写一个C语言实现的SHA256代码，以便可以复用。 SHA256简介SHA256是SHA-2算法的一个分支，SHA-2的名称来自于安全散列算法2（英语：Secure Hash Algorithm 2）的缩写，是">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Notes\ SHA256 算法">
+<meta property="og:title" content="Notes&#x2F; SHA256 算法">
 <meta property="og:url" content="http://example.com/2020/12/08/Notes-sha256/index.html">
 <meta property="og:site_name" content="Ludwig&#39;s Blog">
 <meta property="og:description" content="最近参与的项目涉及到对报文添加数字摘要，使用的算法是SHA256。关于SHA256算法，网上一搜一大把，虽说这样可以解决燃眉之急，但并不利于其他项目但共享，所以为了团队开发的方便，需要自行编写一个C语言实现的SHA256代码，以便可以复用。 SHA256简介SHA256是SHA-2算法的一个分支，SHA-2的名称来自于安全散列算法2（英语：Secure Hash Algorithm 2）的缩写，是">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-12-08T13:48:53.000Z">
-<meta property="article:modified_time" content="2020-12-08T16:03:43.348Z">
+<meta property="article:modified_time" content="2020-12-13T16:17:34.187Z">
 <meta property="article:author" content="Ludwig von Weychthofen">
+<meta property="article:tag" content="Algorithm">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="http://example.com/2020/12/08/Notes-sha256/">
@@ -47,7 +48,7 @@
   };
 </script>
 
-  <title>Notes\ SHA256 算法 | Ludwig's Blog</title>
+  <title>Notes/ SHA256 算法 | Ludwig's Blog</title>
   
 
 
@@ -101,6 +102,7 @@
       <h1 class="site-title">Ludwig's Blog</h1>
       <span class="logo-line-after"><i></i></span>
     </a>
+      <p class="site-subtitle" itemprop="description">Das Freiheit, Reichtum und die wahre Liebe</p>
   </div>
 
   <div class="site-nav-right">
@@ -119,9 +121,24 @@
     <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
 
   </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
         <li class="menu-item menu-item-technology">
 
     <a href="/Technology/" rel="section"><i class="fa fa-hashtag fa-fw"></i>Technology</a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a>
 
   </li>
         <li class="menu-item menu-item-café-house">
@@ -132,6 +149,11 @@
         <li class="menu-item menu-item-模型屋">
 
     <a href="/Modle%20House/" rel="section"><i class="fa fa-space-shuttle fa-fw"></i>模型屋</a>
+
+  </li>
+        <li class="menu-item menu-item-deutsch">
+
+    <a href="/Deutsch/" rel="section"><i class="fa fa-tree fa-fw"></i>Deutsch</a>
 
   </li>
         <li class="menu-item menu-item-archives">
@@ -147,6 +169,11 @@
         <li class="menu-item menu-item-about">
 
     <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-commonweal">
+
+    <a href="/404/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>公益 404</a>
 
   </li>
   </ul>
@@ -181,7 +208,7 @@
     <link itemprop="mainEntityOfPage" href="http://example.com/2020/12/08/Notes-sha256/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/avatar.jpg">
       <meta itemprop="name" content="Ludwig von Weychthofen">
       <meta itemprop="description" content="">
     </span>
@@ -191,7 +218,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Notes\ SHA256 算法
+          Notes/ SHA256 算法
         </h1>
 
         <div class="post-meta">
@@ -208,7 +235,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-12-09 00:03:43" itemprop="dateModified" datetime="2020-12-09T00:03:43+08:00">2020-12-09</time>
+                <time title="修改时间：2020-12-14 00:17:34" itemprop="dateModified" datetime="2020-12-14T00:17:34+08:00">2020-12-14</time>
               </span>
 
           <br>
@@ -217,7 +244,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>421</span>
+              <span>985</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -243,7 +270,17 @@
 <p>SHA256顾名思义就是生成摘要的长度为256bit的安全散列算法。</p>
 <a id="more"></a>
 
-<h2 id="数字签名和数字摘要"><a href="#数字签名和数字摘要" class="headerlink" title="数字签名和数字摘要"></a>数字签名和数字摘要</h2>
+<h2 id="数字签名和数字摘要"><a href="#数字签名和数字摘要" class="headerlink" title="数字签名和数字摘要"></a>数字签名和数字摘要</h2><p>说到SHA256就不得不说数字签名和数字摘要的问题；</p>
+<p>“数字签名”从字面理解就是数字化的签名行为，签名（Sign）在现实世界中被认为是一种具有权威性或法律效力的标记，通常是在重要文件或商业合同中用作不可抵赖的凭证信息和有效性证明；那么在电子化的计算机环境中，就有了对应的“数字签名（Digital Signature）”这一确保信息真实性和身份不可抵赖性的技术；在我本人的日常工作中，数字签名通常用来加在一段通讯报文的末尾，用来给对方提供可供检验的报文，以确保通讯的正常和安全，大致过程如下：</p>
+<ol>
+<li>Alice想要发送报文给Bob （假设报文为‘message’）</li>
+<li>Alice担心报文在传送过程中被恶意篡改或丢失，所以和Bob约定了一个仅有他们知道的相同的加签算法</li>
+<li>Alice通过约定的加签方式在‘message’后面拼上计算出来的数字签名‘message12345’，并将组合成的新报文发送给Bob</li>
+<li>Bob受到Alice发送的带有数字签名的报文</li>
+<li>Bob取出‘message’信息以及数字签名‘12345’，为了验证该报文确实是Alice所发，且报文没有在发送过程中被认为篡改，需要利用先前约定的算法重新计算‘message’的签名</li>
+<li>若Bob计算出的签名内容和Alice发送的签名一致，则认为报文合法且有效，若不一致，则可认为报文非法，不认可报文的内容</li>
+</ol>
+
     </div>
 
     
@@ -251,6 +288,9 @@
     
 
       <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Algorithm/" rel="tag"># Algorithm</a>
+          </div>
 
         
 
@@ -258,10 +298,13 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2020/11/28/Notes-IBM-MQ-%E5%85%A5%E9%97%A8%E4%BD%93%E9%AA%8C/" rel="prev" title="Notes\ IBM MQ 初体验">
-      <i class="fa fa-chevron-left"></i> Notes\ IBM MQ 初体验
+    <a href="/2020/11/28/Notes-IBM-MQ-%E5%85%A5%E9%97%A8%E4%BD%93%E9%AA%8C/" rel="prev" title="Notes/ IBM MQ 初体验">
+      <i class="fa fa-chevron-left"></i> Notes/ IBM MQ 初体验
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2020/12/14/LeetCode-No-175-%E7%BB%84%E5%90%88%E4%B8%A4%E4%B8%AA%E8%A1%A8/" rel="next" title="LeetCode/ No.175 组合两个表">
+      LeetCode/ No.175 组合两个表 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -326,6 +369,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Ludwig von Weychthofen"
+      src="/images/avatar.jpg">
   <p class="site-author-name" itemprop="name">Ludwig von Weychthofen</p>
   <div class="site-description" itemprop="description"></div>
 </div>
@@ -334,9 +379,13 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">4</span>
+          <span class="site-state-item-count">5</span>
           <span class="site-state-item-name">日志</span>
         </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">标签</span>
       </div>
   </nav>
 </div>
@@ -371,7 +420,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">2k</span>
+    <span title="站点总字数">3k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
