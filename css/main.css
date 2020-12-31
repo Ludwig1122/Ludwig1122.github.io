@@ -33,10 +33,10 @@
     --table-row-hover-bg-color: #363636;
     --menu-item-bg-color: #1bd0ef;
     --btn-default-bg: #fbf50b;
-    --btn-default-color: #fbf50b;
+    --btn-default-color: #000;
     --btn-default-border-color: #fbf50b;
-    --btn-default-hover-bg: $$cyber-yellow;
-    --btn-default-hover-color: $$cyber-yellow;
+    --btn-default-hover-bg: #000;
+    --btn-default-hover-color: #1bd0ef;
     --btn-default-hover-border-color: #666;
   }
   img {
@@ -1252,7 +1252,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #8e946f;
+  background: #fb4449;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
